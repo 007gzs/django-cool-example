@@ -37,6 +37,7 @@ class Permission(utils.ExampleBaseModel):
 
 class Group(utils.ExampleBaseModel):
     name = models.CharField(_('group name'), max_length=255)
+    modules = models.ManyToManyField(Module, verbose_name=_('group modules'), blank=True)
     permissions = models.ManyToManyField(Permission, verbose_name=_('group permissions'), blank=True)
 
     class Meta:
@@ -54,7 +55,8 @@ class User(model.AbstractUserMixin, utils.ExampleBaseModel, AbstractBaseUser):
         _('avatar'), max_length=512, blank=True, default='', upload_to=utils.FileUploadTo('avatar/%Y/%m%d/')
     )
     is_superuser = models.BooleanField(_('is superuser'), default=False)
-    user_permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True)
+    modules = models.ManyToManyField(Module, verbose_name=_('user modules'), blank=True)
+    permissions = models.ManyToManyField(Permission, verbose_name=_('user permissions'), blank=True)
     groups = models.ManyToManyField(Group, verbose_name=_('user groups'), blank=True)
 
     @classmethod
@@ -66,13 +68,9 @@ class User(model.AbstractUserMixin, utils.ExampleBaseModel, AbstractBaseUser):
     def __str__(self):
         return self.nickname
 
-    def get_group_permissions(self, obj=None):
-        from .backend import BaseUserBackend
-        return BaseUserBackend().get_group_permissions(self, obj)
-
     def get_all_permissions(self, obj=None):
         from .backend import BaseUserBackend
-        return BaseUserBackend().get_all_permissions(self, obj)
+        return BaseUserBackend.get_all_permissions(self, obj)
 
     def has_perm(self, perm, obj=None):
         from .backend import BaseUserBackend
@@ -82,18 +80,10 @@ class User(model.AbstractUserMixin, utils.ExampleBaseModel, AbstractBaseUser):
             return True
 
         # Otherwise we need to check the backends.
-        return BaseUserBackend().has_perm(self, perm, obj)
+        return BaseUserBackend.has_perm(self, perm, obj)
 
     def has_perms(self, perm_list, obj=None):
         return all(self.has_perm(perm, obj) for perm in perm_list)
-
-    def has_module_perms(self, app_label):
-        from .backend import BaseUserBackend
-        # Active superusers have all permissions.
-        if self.is_active and self.is_superuser:
-            return True
-
-        return BaseUserBackend().has_module_perms(self, app_label)
 
     class Meta:
         verbose_name = verbose_name_plural = _('system user')

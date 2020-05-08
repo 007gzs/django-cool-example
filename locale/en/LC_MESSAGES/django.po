@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-cool-example\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-08 11:37+0800\n"
+"POT-Creation-Date: 2020-05-08 19:19+0800\n"
 "PO-Revision-Date: 2020-04-30 15:28+0800\n"
 "Last-Translator: 007gzs <007gzs@gmail.com>\n"
 "Language-Team: 007gzs <007gzs@gmail.com>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\example\apps\demo\admin.py:14
+#: .\example\apps\demo\admin.py:13
 msgid "Personal info"
 msgstr ""
 
-#: .\example\apps\demo\admin.py:15
+#: .\example\apps\demo\admin.py:14
 msgid "Permissions"
 msgstr ""
 
@@ -64,55 +64,63 @@ msgid "group name"
 msgstr ""
 
 #: .\example\apps\demo\models.py:40
+msgid "group modules"
+msgstr ""
+
+#: .\example\apps\demo\models.py:41
 msgid "group permissions"
 msgstr ""
 
-#: .\example\apps\demo\models.py:43
+#: .\example\apps\demo\models.py:44
 msgid "system group"
 msgstr ""
 
-#: .\example\apps\demo\models.py:48 .\example\apps\demo\views.py:30
-#: .\example\apps\demo\views.py:74
+#: .\example\apps\demo\models.py:49 .\example\apps\demo\views.py:30
+#: .\example\apps\demo\views.py:73
 msgid "login name"
 msgstr ""
 
-#: .\example\apps\demo\models.py:49 .\example\apps\demo\views.py:76
+#: .\example\apps\demo\models.py:50 .\example\apps\demo\views.py:76
 #: .\example\apps\demo\views.py:145
 msgid "mobile number"
 msgstr ""
 
-#: .\example\apps\demo\models.py:50 .\example\apps\demo\views.py:77
+#: .\example\apps\demo\models.py:51 .\example\apps\demo\views.py:77
 #: .\example\apps\demo\views.py:146
 msgid "nick name"
 msgstr ""
 
-#: .\example\apps\demo\models.py:51 .\example\apps\demo\views.py:78
+#: .\example\apps\demo\models.py:52 .\example\apps\demo\views.py:78
 #: .\example\apps\demo\views.py:147
 msgid "name"
 msgstr ""
 
-#: .\example\apps\demo\models.py:52
+#: .\example\apps\demo\models.py:53
 msgid "gender"
 msgstr ""
 
-#: .\example\apps\demo\models.py:54 .\example\apps\demo\views.py:79
+#: .\example\apps\demo\models.py:55 .\example\apps\demo\views.py:79
 #: .\example\apps\demo\views.py:148
 msgid "avatar"
 msgstr ""
 
-#: .\example\apps\demo\models.py:56
+#: .\example\apps\demo\models.py:57
 msgid "is superuser"
 msgstr ""
 
-#: .\example\apps\demo\models.py:57
+#: .\example\apps\demo\models.py:58
+msgid "user modules"
+msgstr ""
+
+#: .\example\apps\demo\models.py:59
 msgid "user permissions"
 msgstr ""
 
-#: .\example\apps\demo\models.py:58
+#: .\example\apps\demo\models.py:60
 msgid "user groups"
 msgstr ""
 
-#: .\example\apps\demo\models.py:99
+#: .\example\apps\demo\models.py:89
 msgid "system user"
 msgstr ""
 
@@ -120,17 +128,17 @@ msgstr ""
 msgid "user login"
 msgstr ""
 
-#: .\example\apps\demo\views.py:31
-msgid "Help text for field. It will show in api document"
-msgstr ""
-
-#: .\example\apps\demo\views.py:32 .\example\apps\demo\views.py:75
+#: .\example\apps\demo\views.py:31 .\example\apps\demo\views.py:75
 #: .\example\apps\demo\views.py:144
 msgid "password"
 msgstr ""
 
-#: .\example\apps\demo\views.py:39
+#: .\example\apps\demo\views.py:38
 msgid "user register"
+msgstr ""
+
+#: .\example\apps\demo\views.py:74
+msgid "Help text for field. It will show in api document"
 msgstr ""
 
 #: .\example\apps\demo\views.py:104
@@ -153,14 +161,14 @@ msgstr ""
 msgid "user permission test2"
 msgstr ""
 
-#: .\example\core\utils.py:21
+#: .\example\core\utils.py:33
 msgid "ID"
 msgstr ""
 
-#: .\example\core\utils.py:22
+#: .\example\core\utils.py:34
 msgid "Create Time"
 msgstr ""
 
-#: .\example\core\utils.py:23
+#: .\example\core\utils.py:35
 msgid "Modify Time"
 msgstr ""

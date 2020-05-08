@@ -12,7 +12,7 @@ class UserSerializer(views.BaseSerializer):
     permissions = serializers.SerializerMethodField("all_permissions", label='权限列表')
 
     def all_permissions(self, obj):
-        return BaseUserBackend().get_all_permissions(obj)
+        return BaseUserBackend.get_all_permissions(obj)
 
     class Meta:
         model = models.User

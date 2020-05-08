@@ -11,11 +11,11 @@ class BaseUserAdmin(utils.ExampleBaseModelAdmin, UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('nickname', 'name', 'mobile', 'avatar')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'groups', 'permissions', 'modules')}),
     )
 
     exclude_list_display = ('password', )
-    filter_horizontal = ('groups', 'user_permissions',)
+    filter_horizontal = ('groups', 'permissions', 'modules')
 
 
 utils.site_register(models.User, BaseUserAdmin, list_filter=('groups', 'gender'))
