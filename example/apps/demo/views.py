@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework import fields
 
-from . import serializer, models
+from . import serializer, models, constants
 
 site = ViewSite(name='demo', app_name='demo')
 
@@ -52,6 +52,7 @@ class UserRegister(CoolBFFAPIView):
         user.nickname = request.params.nickname
         user.name = request.params.name
         user.avatar = request.params.avatar
+        user.gender = request.params.gender
         user.set_password(request.params.password)
         try:
             user.save(force_insert=True)
@@ -73,7 +74,9 @@ class UserRegister(CoolBFFAPIView):
             ('username', fields.CharField(label=_('login name'), max_length=64,
                                           help_text=_('Help text for field. It will show in api document'))),
             ('password', fields.CharField(label=_('password'))),
+            ('gender', fields.ChoiceField(label=_('gender'), choices=constants.Gender.get_choices_list())),
             ('mobile', fields.RegexField(r'1\d{10}', label=_('mobile number'))),
+            ('nickname', fields.CharField(label=_('nick name'), max_length=255)),
             ('nickname', fields.CharField(label=_('nick name'), max_length=255)),
             ('name', fields.CharField(label=_('name'), default='', max_length=255)),
             ('avatar', fields.ImageField(label=_('avatar'), default=None)),
@@ -136,12 +139,17 @@ class UserEdit(UserApi):
             user.avatar = request.params.avatar
         if request.params.password is not None:
             user.set_password(request.params.password)
+        if request.params.gender is not None:
+            user.avatar = request.params.gender
         user.save_changed()
         return serializer.UserSerializer(user).data
 
     class Meta:
         param_fields = (
             ('password', fields.CharField(label=_('password'), default=None)),
+            ('gender', fields.ChoiceField(
+                label=_('gender'), default=None, choices=constants.Gender.get_choices_list()
+            )),
             ('mobile', fields.RegexField(r'1\d{10}', label=_('mobile number'), default=None)),
             ('nickname', fields.CharField(label=_('nick name'), default=None, max_length=255)),
             ('name', fields.CharField(label=_('name'), default=None, max_length=255)),
