@@ -11,7 +11,7 @@ class BaseUserAdmin(utils.ExampleBaseModelAdmin, UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('nickname', 'name', 'gender', 'mobile', 'avatar')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_superuser', 'groups', 'permissions', 'modules')}),
+        (_('Permissions'), {'fields': ('is_superuser', 'groups', 'permissions', 'modules')}),
     )
 
     exclude_list_display = ('password', )
