@@ -1,0 +1,166 @@
+# This file is distributed under the same license as the django-cool-example package.
+# 007gzs <007gzs@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: django-cool-example\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-08 11:37+0800\n"
+"PO-Revision-Date: 2020-04-30 15:28+0800\n"
+"Last-Translator: 007gzs <007gzs@gmail.com>\n"
+"Language-Team: 007gzs <007gzs@gmail.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\example\apps\demo\admin.py:14
+msgid "Personal info"
+msgstr "基础信息"
+
+#: .\example\apps\demo\admin.py:15
+msgid "Permissions"
+msgstr "权限"
+
+#: .\example\apps\demo\apps.py:9
+msgid "Demo"
+msgstr "示例项目"
+
+#: .\example\apps\demo\constants.py:8
+msgid "Male"
+msgstr "男"
+
+#: .\example\apps\demo\constants.py:9
+msgid "Female"
+msgstr "女"
+
+#: .\example\apps\demo\models.py:13
+msgid "module name"
+msgstr "模块名称"
+
+#: .\example\apps\demo\models.py:14
+msgid "module code"
+msgstr "模块编码"
+
+#: .\example\apps\demo\models.py:17 .\example\apps\demo\models.py:24
+msgid "module"
+msgstr "模块"
+
+#: .\example\apps\demo\models.py:21
+msgid "permission name"
+msgstr "权限名称"
+
+#: .\example\apps\demo\models.py:22
+msgid "permission code"
+msgstr "权限编码"
+
+#: .\example\apps\demo\models.py:35
+msgid "permission"
+msgstr "权限"
+
+#: .\example\apps\demo\models.py:39
+msgid "group name"
+msgstr "分组名称"
+
+#: .\example\apps\demo\models.py:40
+msgid "group permissions"
+msgstr "分组权限"
+
+#: .\example\apps\demo\models.py:43
+msgid "system group"
+msgstr "系统分组"
+
+#: .\example\apps\demo\models.py:48 .\example\apps\demo\views.py:30
+#: .\example\apps\demo\views.py:74
+msgid "login name"
+msgstr "用户名"
+
+#: .\example\apps\demo\models.py:49 .\example\apps\demo\views.py:76
+#: .\example\apps\demo\views.py:145
+msgid "mobile number"
+msgstr "手机号"
+
+#: .\example\apps\demo\models.py:50 .\example\apps\demo\views.py:77
+#: .\example\apps\demo\views.py:146
+msgid "nick name"
+msgstr "昵称"
+
+#: .\example\apps\demo\models.py:51 .\example\apps\demo\views.py:78
+#: .\example\apps\demo\views.py:147
+msgid "name"
+msgstr "姓名"
+
+#: .\example\apps\demo\models.py:52
+msgid "gender"
+msgstr "性别"
+
+#: .\example\apps\demo\models.py:54 .\example\apps\demo\views.py:79
+#: .\example\apps\demo\views.py:148
+msgid "avatar"
+msgstr "头像"
+
+#: .\example\apps\demo\models.py:56
+msgid "is superuser"
+msgstr "超级用户"
+
+#: .\example\apps\demo\models.py:57
+msgid "user permissions"
+msgstr "用户权限"
+
+#: .\example\apps\demo\models.py:58
+msgid "user groups"
+msgstr "用户分组"
+
+#: .\example\apps\demo\models.py:99
+msgid "system user"
+msgstr "系统用户"
+
+#: .\example\apps\demo\views.py:18
+msgid "user login"
+msgstr "用户登陆"
+
+#: .\example\apps\demo\views.py:31
+msgid "Help text for field. It will show in api document"
+msgstr "字段说明 api文档中显示"
+
+#: .\example\apps\demo\views.py:32 .\example\apps\demo\views.py:75
+#: .\example\apps\demo\views.py:144
+msgid "password"
+msgstr "密码"
+
+#: .\example\apps\demo\views.py:39
+msgid "user register"
+msgstr "用户注册"
+
+#: .\example\apps\demo\views.py:104
+msgid "user logout"
+msgstr "用户注销"
+
+#: .\example\apps\demo\views.py:114
+msgid "user info"
+msgstr "用户信息"
+
+#: .\example\apps\demo\views.py:124
+msgid "change user info"
+msgstr "用户信息修改"
+
+#: .\example\apps\demo\views.py:154
+msgid "user permission test"
+msgstr "用户权限测试"
+
+#: .\example\apps\demo\views.py:164
+msgid "user permission test2"
+msgstr "用户权限测试2"
+
+#: .\example\core\utils.py:21
+msgid "ID"
+msgstr "主键ID"
+
+#: .\example\core\utils.py:22
+msgid "Create Time"
+msgstr "创建时间"
+
+#: .\example\core\utils.py:23
+msgid "Modify Time"
+msgstr "修改时间"
