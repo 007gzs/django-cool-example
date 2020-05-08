@@ -39,7 +39,7 @@ class UserRegister(CoolBFFAPIView):
     response_info_serializer_class = serializer.UserSerializer
 
     def get_context(self, request, *args, **kwargs):
-        user = models.User.objects.get_all_queryset().filter(
+        user = models.User.objects.filter(
             Q(username=request.params.username) | Q(mobile=request.params.mobile)).first()
         if user is not None:
             if user.username == request.params.username:

@@ -10,11 +10,23 @@ from django.http import HttpResponse
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
 from cool.model import BaseModel
-from cool.admin import BaseModelAdmin, DateRangeFieldFilter
+from cool.admin import BaseModelAdmin, DateRangeFieldFilter, site_register as cool_site_register
 
 
 class ExampleBaseModelAdmin(BaseModelAdmin):
-    list_filter = (('create_time', DateRangeFieldFilter), ('modify_time', DateRangeFieldFilter))
+    list_filter = ('create_time', 'modify_time')
+
+
+def site_register(model_or_iterable, admin_class=None, site=None, add_base_list_filter=True, **options):
+    if admin_class is None:
+        admin_class = ExampleBaseModelAdmin
+    if add_base_list_filter and 'list_filter' in options and admin_class.list_filter:
+        new_list_filter = list(admin_class.list_filter)
+        for field in options['list_filter']:
+            if field not in new_list_filter:
+                new_list_filter.append(field)
+        options['list_filter'] = new_list_filter
+    cool_site_register(model_or_iterable, admin_class, site, **options)
 
 
 class ExampleBaseModel(BaseModel):
