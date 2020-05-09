@@ -61,8 +61,8 @@ class FileUploadTo(object):
     def __call__(self, instance, filename):
         dirname = datetime.datetime.now().strftime(self.base_path)
         extension = posixpath.splitext(filename)[1]
-        data = "%s_%d" % (filename, int(time.time()))
-        file_hash = hashlib.sha1(data).hexdigest()
+        data = "%s_%s" % (filename, time.time())
+        file_hash = hashlib.sha1(data.encode('utf-8')).hexdigest()
         filename = "%s%s" % (file_hash, extension)
         return posixpath.join(dirname, filename)
 
