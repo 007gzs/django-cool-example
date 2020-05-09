@@ -16,9 +16,10 @@ class BaseUserAdmin(utils.ExampleBaseModelAdmin, UserAdmin):
 
     exclude_list_display = ('password', )
     filter_horizontal = ('groups', 'permissions', 'modules')
+    change_view_readonly_fields = ['username', ]
 
 
-utils.site_register(models.User, BaseUserAdmin, list_filter=('groups', 'gender'))
+utils.site_register(models.User, BaseUserAdmin, list_filter=('groups', 'gender'), addable=False)
 utils.site_register(models.Module, list_display=[], change_view_readonly_fields=['code', ])
 utils.site_register(
     models.Permission,
