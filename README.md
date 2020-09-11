@@ -27,6 +27,6 @@ sudo python manage.py runserver 0.0.0.0:80
 测试页面
 ----------
 
-- [所有接口api文档](https://example.django.cool/doc.md)
+- [所有接口api文档](https://example.django.cool/doc.html)
 - [单个接口api文档](https://example.django.cool/api/demo/user/register)
 - [后台演示](https://example.django.cool/admin) (用户名：demo 密码：django-cool)

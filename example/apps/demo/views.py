@@ -1,8 +1,10 @@
 # encoding: utf-8
 
-from cool.views import ViewSite, CoolBFFAPIView, ErrorCode, CoolAPIException
+from django.shortcuts import render
+
+from cool.views import ViewSite, CoolBFFAPIView, ErrorCode, CoolAPIException, utils
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework import fields
@@ -23,7 +25,7 @@ class UserLogin(CoolBFFAPIView):
         if user is None:
             raise CoolAPIException(ErrorCode.ERR_DEMO_NOTFOUND)
         login(request, user)
-        return serializer.UserSerializer(user).data
+        return serializer.UserSerializer(user, request=request).data
 
     class Meta:
         param_fields = (
@@ -40,7 +42,8 @@ class UserRegister(CoolBFFAPIView):
 
     def get_context(self, request, *args, **kwargs):
         user = models.User.objects.filter(
-            Q(username=request.params.username) | Q(mobile=request.params.mobile)).first()
+            Q(username=request.params.username) | Q(mobile=request.params.mobile)
+        ).first()
         if user is not None:
             if user.username == request.params.username:
                 raise CoolAPIException(ErrorCode.ERR_DEMO_DUPLICATE_USERNAME)
@@ -67,7 +70,7 @@ class UserRegister(CoolBFFAPIView):
         if user is None:
             raise CoolAPIException(ErrorCode.ERR_DEMO_NOTFOUND)
         login(request, user)
-        return serializer.UserSerializer(user).data
+        return serializer.UserSerializer(user, request=request).data
 
     class Meta:
         param_fields = (
@@ -76,7 +79,6 @@ class UserRegister(CoolBFFAPIView):
             ('password', fields.CharField(label=_('password'))),
             ('gender', fields.ChoiceField(label=_('gender'), choices=constants.Gender.get_choices_list())),
             ('mobile', fields.RegexField(r'1\d{10}', label=_('mobile number'))),
-            ('nickname', fields.CharField(label=_('nick name'), max_length=255)),
             ('nickname', fields.CharField(label=_('nick name'), max_length=255)),
             ('name', fields.CharField(label=_('name'), default='', max_length=255)),
             ('avatar', fields.ImageField(label=_('avatar'), default=None)),
@@ -118,42 +120,66 @@ class UserInfo(UserApi):
     response_info_serializer_class = serializer.UserSerializer
 
     def get_context(self, request, *args, **kwargs):
-        return serializer.UserSerializer(request.user).data
+        return serializer.UserSerializer(request.user, request=request).data
+
+
+class EditMixin:
+
+    model = None
+    edit_fields = []
+
+    @classmethod
+    def get_extend_param_fields(cls):
+        ret = list()
+        ret.extend(super().get_extend_param_fields())
+        if cls.model is not None:
+            for edit_field in cls.edit_fields:
+                ret.append((edit_field, utils.get_rest_field_from_model_field(cls.model, edit_field, default=None)))
+        return tuple(ret)
+
+    def get_obj(self, request):
+        raise NotImplementedError
+
+    def modify_obj(self, request, obj):
+        for edit_field in self.edit_fields:
+            value = getattr(request.params, edit_field, None)
+            if value is not None:
+                setattr(obj, edit_field, value)
+
+    def save_obj(self, request, obj):
+        obj.full_clean()
+        obj.save_changed()
+
+    def serializer_response(self, data, request):
+        return self.response_info_serializer_class(data, request=request).data
+
+    def get_context(self, request, *args, **kwargs):
+        with transaction.atomic():
+            obj = self.get_obj(request)
+            self.modify_obj(request, obj)
+            self.save_obj(request, obj)
+        return self.serializer_response(obj, request=request)
 
 
 @site
-class UserEdit(UserApi):
+class UserEdit(EditMixin, UserApi):
 
     name = _('change user info')
     response_info_serializer_class = serializer.UserSerializer
+    model = models.User
+    edit_fields = ['gender', 'mobile', 'nickname', 'name', 'avatar']
 
-    def get_context(self, request, *args, **kwargs):
-        user = request.user
-        if request.params.mobile is not None:
-            user.mobile = request.params.mobile
-        if request.params.nickname is not None:
-            user.nickname = request.params.nickname
-        if request.params.name is not None:
-            user.name = request.params.name
-        if request.params.avatar is not None:
-            user.avatar = request.params.avatar
+    def get_obj(self, request):
+        return request.user
+
+    def modify_obj(self, request, obj):
+        super().modify_obj(request, obj)
         if request.params.password is not None:
-            user.set_password(request.params.password)
-        if request.params.gender is not None:
-            user.avatar = request.params.gender
-        user.save_changed()
-        return serializer.UserSerializer(user).data
+            obj.set_password(request.params.password)
 
     class Meta:
         param_fields = (
             ('password', fields.CharField(label=_('password'), default=None)),
-            ('gender', fields.ChoiceField(
-                label=_('gender'), default=None, choices=constants.Gender.get_choices_list()
-            )),
-            ('mobile', fields.RegexField(r'1\d{10}', label=_('mobile number'), default=None)),
-            ('nickname', fields.CharField(label=_('nick name'), default=None, max_length=255)),
-            ('name', fields.CharField(label=_('name'), default=None, max_length=255)),
-            ('avatar', fields.ImageField(label=_('avatar'), default=None)),
         )
 
 
@@ -175,6 +201,30 @@ class PermissionTest2(UserApi):
 
     def get_context(self, request, *args, **kwargs):
         return 'ok'
+
+
+@site
+class Test(CoolBFFAPIView):
+    def get_context(self, request, *args, **kwargs):
+        return render(request, request.params.template)
+
+    class Meta:
+        param_fields = (
+            ('template', fields.CharField()),
+        )
+
+
+@site
+class TestRe(CoolBFFAPIView):
+    def get_context(self, request, *args, **kwargs):
+        return request.params.test
+
+    class Meta:
+        param_fields = (
+            ('app_id', fields.CharField()),
+            ('test', fields.JSONField()),
+        )
+        path = "(?P<app_id>[0-9a-zA-Z]+)/testre"
 
 
 urls = site.urls

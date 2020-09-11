@@ -1,6 +1,7 @@
 # encoding: utf-8
-
+from cool.admin import admin_register
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from cool import model
@@ -17,6 +18,7 @@ class Module(utils.ExampleBaseModel):
         verbose_name = verbose_name_plural = _('module')
 
 
+@admin_register(list_display=['module', ], list_filter=['module', ], change_view_readonly_fields=['code', ])
 class Permission(utils.ExampleBaseModel):
     name = models.CharField(_('permission name'), max_length=255)
     code = models.CharField(_('permission code'), max_length=100)
@@ -35,6 +37,7 @@ class Permission(utils.ExampleBaseModel):
         verbose_name = verbose_name_plural = _('permission')
 
 
+@admin_register
 class Group(utils.ExampleBaseModel):
     name = models.CharField(_('group name'), max_length=255)
     modules = models.ManyToManyField(Module, verbose_name=_('group modules'), blank=True)
@@ -47,7 +50,9 @@ class Group(utils.ExampleBaseModel):
 class User(model.AbstractUserMixin, utils.ExampleBaseModel, AbstractBaseUser):
     USERNAME_FIELD = 'username'
     username = models.CharField(_('login name'), max_length=64, unique=True)
-    mobile = models.CharField(_('mobile number'), max_length=32, unique=True)
+    mobile = models.CharField(
+        _('mobile number'), max_length=12, unique=True, validators=[validators.RegexValidator(r'1\d{10}')]
+    )
     nickname = models.CharField(_('nick name'), max_length=255, blank=True, default='')
     name = models.CharField(_('name'), max_length=255, blank=True, default='')
     gender = models.IntegerField(_('gender'), choices=constants.Gender.get_choices_list())
@@ -63,6 +68,7 @@ class User(model.AbstractUserMixin, utils.ExampleBaseModel, AbstractBaseUser):
     def get_search_fields(cls):
         ret = super().get_search_fields()
         ret.add('nickname')
+        ret.add('modules__name')
         return ret
 
     def __str__(self):

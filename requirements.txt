@@ -1,4 +1,6 @@
 Pillow
-django
+markdown
+django>=2.2
 djangorestframework
-django-cool
+channels>=2.4
+django-cool>=0.1.31
