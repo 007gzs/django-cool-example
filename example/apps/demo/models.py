@@ -18,7 +18,12 @@ class Module(utils.ExampleBaseModel):
         verbose_name = verbose_name_plural = _('module')
 
 
-@admin_register(list_display=['module', ], list_filter=['module', ], change_view_readonly_fields=['code', ])
+@admin_register(
+    list_display=['module', 'name'],
+    list_filter=['module', ],
+    change_view_readonly_fields=['code', ],
+    list_editable=['name', 'module']
+)
 class Permission(utils.ExampleBaseModel):
     name = models.CharField(_('permission name'), max_length=255)
     code = models.CharField(_('permission code'), max_length=100)

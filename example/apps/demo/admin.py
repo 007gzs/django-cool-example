@@ -21,4 +21,4 @@ class BaseUserAdmin(admin.BaseModelAdmin, UserAdmin):
 
 
 admin.site_register(models.User, BaseUserAdmin, list_filter=('groups', 'gender', 'modules'), addable=False)
-admin.site_register(models.Module, change_view_readonly_fields=['code', ])
+admin.site_register(models.Module, change_view_readonly_fields=['code'], list_display=['name'], list_editable=['name'])

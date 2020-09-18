@@ -4,9 +4,7 @@ import hashlib
 import posixpath
 import time
 
-from cool.views import get_api_doc
 from django.db import models
-from django.http import HttpResponse
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
 from cool.model import BaseModel
@@ -48,7 +46,3 @@ class FileUploadTo(object):
         file_hash = hashlib.sha1(data.encode('utf-8')).hexdigest()
         filename = "%s%s" % (file_hash, extension)
         return posixpath.join(dirname, filename)
-
-
-def api_doc(request):
-    return HttpResponse(get_api_doc(request), content_type='text/markdown;charset=utf-8')

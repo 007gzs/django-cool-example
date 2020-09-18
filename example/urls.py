@@ -18,9 +18,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.views.static import serve
-from cool.views import utils
+from cool.views import get_api_doc_html
 
-from example.core.utils import api_doc
 
 apipatterns = [
     path('demo/', include('example.apps.demo.views')),
@@ -29,8 +28,7 @@ urlpatterns = [
     path('cool/', include('cool.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(apipatterns)),
-    path('doc.md', api_doc),
-    path('doc.html', utils.get_api_doc_html)
+    path('api_doc.html', get_api_doc_html)
 ]
 if settings.DEBUG:
     urlpatterns.append(
