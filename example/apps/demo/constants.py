@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-from django.utils.translation import gettext_lazy as _
 from cool.core import Constants
+from django.utils.translation import gettext_lazy as _
 
 
 class Gender(Constants):

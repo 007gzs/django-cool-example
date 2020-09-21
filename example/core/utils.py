@@ -4,10 +4,10 @@ import hashlib
 import posixpath
 import time
 
+from cool.model import BaseModel
 from django.db import models
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
-from cool.model import BaseModel
 
 
 class ExampleBaseModel(BaseModel):

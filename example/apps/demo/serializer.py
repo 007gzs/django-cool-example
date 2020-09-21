@@ -1,8 +1,7 @@
 # encoding: utf-8
 
-from rest_framework import serializers
-
 from cool import views
+from rest_framework import serializers
 
 from . import models
 from .backend import BaseUserBackend

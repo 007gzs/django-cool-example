@@ -1,12 +1,13 @@
 # encoding: utf-8
+from cool import model
 from cool.admin import admin_register
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from cool import model
 
 from example.core import utils
+
 from . import constants
 
 

@@ -1,15 +1,14 @@
 # encoding: utf-8
 
-from django.shortcuts import render
-
-from cool.views import ViewSite, CoolBFFAPIView, ErrorCode, CoolAPIException, utils
+from cool.views import CoolAPIException, CoolBFFAPIView, ErrorCode, ViewSite, utils
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError, transaction
 from django.db.models import Q
+from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from rest_framework import fields
 
-from . import serializer, models, constants
+from . import constants, models, serializer
 
 site = ViewSite(name='demo', app_name='demo')
 
